@@ -1,6 +1,6 @@
 package com.company;
 
-import com.company.model.HTTPTools;
+import com.company.Tool.HTTPTools;
 
 import java.io.IOException;
 
