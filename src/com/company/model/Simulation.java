@@ -1,12 +1,6 @@
 package com.company.model;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -42,15 +36,15 @@ public class Simulation {
     }
 
 
-    public static Simulation initSimulation() {
+    public static Simulation initSimulation() throws IOException, InterruptedException {
 
         System.out.println("Init liste camion");
 
-        List<Camion> mesCamions = null;
+        List<Camion> mesCamions = factory.GetListCamion();
 
         System.out.println("Init liste capteur");
 
-        List<Capteur> mesCapteurs = null;
+        List<Capteur> mesCapteurs = factory.getListCapteur();
 
         Simulation simu = new Simulation(mesCapteurs, mesCamions);
 

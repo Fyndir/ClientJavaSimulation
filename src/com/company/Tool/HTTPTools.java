@@ -16,7 +16,7 @@ public class HTTPTools {
         System.out.println(data);
         HttpRequest request = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(data))
-                .uri(URI.create("https://cpefiresimulation.azurewebsites.net/send"))
+                .uri(URI.create(adress))
                 .build();
         try {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -25,5 +25,19 @@ public class HTTPTools {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static String get(String adress) throws IOException, InterruptedException {
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(adress))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+        return response.body();
     }
 }

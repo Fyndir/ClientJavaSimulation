@@ -1,5 +1,7 @@
 package com.company.model;
 
+import java.util.List;
+
 public class Camion {
 
     private CoordGeo coordActuel;
@@ -48,4 +50,5 @@ public class Camion {
         CoordGeo nouvelledestination = null; // trouver la nouvelle coord
         this.setCoordActuel(nouvelledestination);
     }
+
 }
