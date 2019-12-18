@@ -21,7 +21,6 @@ public class Capteur {
         this.mesCamions = mesCamions;
     }
 
-
     public int getIntensite() {
         return intensite;
     }
@@ -29,7 +28,6 @@ public class Capteur {
     public void setIntensite(int intensite) {
         this.intensite = intensite;
     }
-
 
     public CoordGeo getCoordActuel() {
         return coordActuel;
@@ -65,4 +63,19 @@ public class Capteur {
         return false;
     }
 
+    public Capteur(float longitude, float latitude, int intensite) {
+        this.setIntensite(intensite);
+        CoordGeo coord = new CoordGeo(longitude, latitude);
+        setCoordActuel(coord);
+    }
+
+    @Override
+    public String toString() {
+        return "Capteur{" +
+                "probaIncendie=" + probaIncendie +
+                ", coordActuel=" + coordActuel.toString() +
+                ", intensite=" + intensite +
+                ", mesCamions=" + mesCamions +
+                '}';
+    }
 }

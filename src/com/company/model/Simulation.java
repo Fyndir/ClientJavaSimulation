@@ -46,6 +46,11 @@ public class Simulation {
 
         List<Capteur> mesCapteurs = factory.getListCapteur();
 
+        for (Capteur cap : mesCapteurs
+        ) {
+            System.out.println(cap.toString());
+        }
+
         Simulation simu = new Simulation(mesCapteurs, mesCamions);
 
         return simu;

@@ -42,4 +42,12 @@ public class CoordGeo {
     public int hashCode() {
         return Objects.hash(coordX, coordY);
     }
+
+    @Override
+    public String toString() {
+        return "CoordGeo{" +
+                "coordX=" + coordX +
+                ", coordY=" + coordY +
+                '}';
+    }
 }
