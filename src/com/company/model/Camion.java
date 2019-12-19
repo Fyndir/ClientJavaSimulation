@@ -14,6 +14,8 @@ public class Camion {
 
     private List<CoordGeo> trajet;
 
+    private int i = 0;
+
     /**
      * Recupere le trajet du camion via l'api osrm
      */
@@ -23,6 +25,7 @@ public class Camion {
 
         List<CoordGeo> trajet =  PolylineDecoder.decode(StrDecode);
         this.trajet=trajet;
+        this.i=0;
 
     }
 
@@ -106,11 +109,13 @@ public class Camion {
         CoordGeo nouvellecoord = null;
         if (trajet == null) {
             // calcul de la coord avec la ligne droite
-            nouvellecoord = null;
+            nouvellecoord = this.getCoordActuel();
         } else {
-            nouvellecoord = null; // trouver la nouvelle coord
+            nouvellecoord = this.trajet.get(i); // trouver la nouvelle coord
+            this.i++;
         }
         this.setCoordActuel(nouvellecoord);
+
     }
 
 }
