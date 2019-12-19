@@ -7,10 +7,18 @@ import java.net.http.HttpResponse;
 import java.net.URI;
 
 public class HTTPTools {
+
+
     private static final HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_2)
             .build();
 
+    /**
+     * requete post sur l url en parametre en envoyant les données en parametre
+     * @param adress
+     * @param data
+     * @throws IOException
+     */
     public static void post(String adress, String data) throws IOException {
         System.out.println("Données envoyées :");
         System.out.println(data);
@@ -27,7 +35,13 @@ public class HTTPTools {
         }
     }
 
-
+    /**
+     * requete get sur l url en parametre
+     * @param adress
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public static String get(String adress) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();

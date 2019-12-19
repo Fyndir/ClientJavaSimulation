@@ -8,27 +8,41 @@ public class CoordGeo {
 
     private float coordY;
 
+    /**
+     * getter CoordX
+     *
+     * @return
+     */
     public float getCoordX() {
         return coordX;
     }
 
-    public void setCoordX(float coordX) {
-        this.coordX = coordX;
-    }
-
+    /**
+     * getter CoordY
+     *
+     * @return
+     */
     public float getCoordY() {
         return coordY;
     }
 
-    public void setCoordY(float coordY) {
-        this.coordY = coordY;
-    }
-
+    /**
+     * Constructeur
+     *
+     * @param coordX
+     * @param coordY
+     */
     public CoordGeo(float coordX, float coordY) {
         this.coordX = coordX;
         this.coordY = coordY;
     }
 
+    /**
+     * Override methode equals
+     *
+     * @param o
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -43,6 +57,11 @@ public class CoordGeo {
         return Objects.hash(coordX, coordY);
     }
 
+    /**
+     * Override de toString
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "CoordGeo{" +
