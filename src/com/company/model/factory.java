@@ -8,6 +8,12 @@ import java.util.List;
 
 public class factory {
 
+    /**
+     * renvoi la list des camions renvoyer par l'api
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public static List<Camion> GetListCamion() throws IOException, InterruptedException {
         List<Camion> camions = new ArrayList<Camion>();
 
@@ -16,6 +22,12 @@ public class factory {
         return camions;
     }
 
+    /**
+     * renvoi la list des capteur renvoyer par l'api
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public static List<Capteur> getListCapteur() throws IOException, InterruptedException {
         List<Capteur> capteurs = new ArrayList<Capteur>();
 

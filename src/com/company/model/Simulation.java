@@ -6,17 +6,32 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Object contenant les object de la simulation
+ */
 public class Simulation {
 
     public List<Capteur> mesCapteurs;
 
     public List<Camion> mesCamions;
 
+    /**
+     * Constructeur de la simulation
+     *
+     * @param mesCapteurs
+     * @param mesCamions
+     */
     public Simulation(List<Capteur> mesCapteurs, List<Camion> mesCamions) {
         this.mesCapteurs = mesCapteurs;
         this.mesCamions = mesCamions;
     }
 
+    /**
+     * Permet de lancer la simulation en parcourant la liste des objects qui la compose et lance leur methode simulation
+     *
+     * @throws InterruptedException
+     * @throws IOException
+     */
     public void run() throws InterruptedException, IOException {
         while (true) {
             try {
@@ -40,6 +55,13 @@ public class Simulation {
         }
     }
 
+    /**
+     * Retourne une simulation initialiser avec les données de la bdd recup via l'api
+     *
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public static Simulation initSimulation() throws IOException, InterruptedException {
 
         System.out.println("Init liste camion");
@@ -59,6 +81,11 @@ public class Simulation {
         return simu;
     }
 
+    /**
+     * Met a jour la base de donnée en envoyant les données sur l'api
+     *
+     * @throws IOException
+     */
     private void UpdateDb() throws IOException {
 
         String StrCapteur = "";
@@ -72,6 +99,7 @@ public class Simulation {
 
     /**
      * Refresh les camions parce que l'evolution des capteurs est gerer par l'appli
+     *
      * @throws IOException
      * @throws InterruptedException
      */
