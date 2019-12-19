@@ -47,11 +47,12 @@ public class Simulation {
             }
             System.out.println("Run des capteurs");
             for (Capteur capteur : mesCapteurs) {
-                capteur.simulation();
+                capteur.run();
             }
             System.out.println("Maj Bdd et simu");
 
             this.UpdateDb();
+            this.Refresh();
         }
     }
 
@@ -66,11 +67,11 @@ public class Simulation {
 
         System.out.println("Init liste camion");
 
-        List<Camion> mesCamions = factory.GetListCamion();
+        List<Camion> mesCamions = Factory.GetListCamion();
 
         System.out.println("Init liste capteur");
 
-        List<Capteur> mesCapteurs = factory.getListCapteur();
+        List<Capteur> mesCapteurs = Factory.getListCapteur();
 
         for (Capteur cap : mesCapteurs) {
             cap.setMesCamions(mesCamions);
@@ -95,6 +96,17 @@ public class Simulation {
         }
 
         HTTPTools.post("https://cpefiresimulation.azurewebsites.net/send", StrCapteur.substring(0, StrCapteur.length() - 1));
+
+        String StrCamion = "";
+
+        for (Camion cam : mesCamions) {
+            StrCamion += cam.getCoordActuel().getCoordX() + "," + cam.getCoordActuel().getCoordY() + "," + cam.getImmatriculation() + ";";
+        }
+
+        HTTPTools.post("https://emergencymanager.azurewebsites.net/camion/send", StrCapteur.substring(0, StrCapteur.length() - 1));
+
+
+
     }
 
     /**
@@ -106,7 +118,8 @@ public class Simulation {
     private void Refresh() throws IOException, InterruptedException {
 
         System.out.println("refresh liste camion");
-        mesCamions = factory.GetListCamion();
+        mesCamions.clear();
+        mesCamions.addAll(Factory.GetListCamion());
     }
 
 

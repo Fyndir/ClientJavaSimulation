@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class factory {
+public class Factory {
 
     /**
      * renvoi la list des camions renvoyer par l'api

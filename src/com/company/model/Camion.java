@@ -1,7 +1,7 @@
 package com.company.model;
-
-import java.nio.charset.CoderResult;
-import java.util.ArrayList;
+import com.company.Tool.HTTPTools;
+import com.company.Tool.PolylineDecoder;
+import java.io.IOException;
 import java.util.List;
 
 public class Camion {
@@ -17,9 +17,13 @@ public class Camion {
     /**
      * Recupere le trajet du camion via l'api osrm
      */
-    private void getTrajet() {
+    private void getTrajet() throws IOException, InterruptedException {
         // Recup avec l'api osrm
-        this.trajet = new ArrayList<CoordGeo>();
+        String StrDecode = HTTPTools.get("https://router.project-osrm.org/route/v1/driving/"+getCoordActuel().getCoordY()+","+getCoordActuel().getCoordX()+";"+getCoordDest().getCoordY()+","+getCoordDest().getCoordX()+"?overview=full");
+
+        List<CoordGeo> trajet =  PolylineDecoder.decode(StrDecode);
+        this.trajet=trajet;
+
     }
 
     /**
@@ -77,7 +81,7 @@ public class Camion {
     /**
      * fait evoluer l'object en fct des regles de la simulations
      */
-    public void simulation() {
+    public void simulation() throws IOException, InterruptedException {
         if (trajet == null) {
             // mettre un petit time out
             this.getTrajet();

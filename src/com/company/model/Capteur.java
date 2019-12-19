@@ -13,31 +13,58 @@ public class Capteur {
 
     private List<Camion> mesCamions;
 
+    /**
+     * getter des camions
+     * @return
+     */
     public List<Camion> getMesCamions() {
         return mesCamions;
     }
 
+    /**
+     * setter des camions
+     * @param mesCamions
+     */
     public void setMesCamions(List<Camion> mesCamions) {
         this.mesCamions = mesCamions;
     }
 
+    /**
+     * getter de l intensite
+     * @return
+     */
     public int getIntensite() {
         return intensite;
     }
 
+    /**
+     * setter de l intensite
+     * @param intensite
+     */
     public void setIntensite(int intensite) {
         this.intensite = intensite;
     }
 
+    /**
+     * getter CoordActuel
+     * @return
+     */
     public CoordGeo getCoordActuel() {
         return coordActuel;
     }
 
+    /**
+     * setter CoordActuel
+     * @param coordActuel
+     */
     public void setCoordActuel(CoordGeo coordActuel) {
         this.coordActuel = coordActuel;
     }
 
-    public void simulation() {
+    /**
+     * Fait evoluer l'object en fct des regles metier
+     */
+    public void run() {
 
         if (this.getIntensite() != 0) {
             if (this.hasTruck()) {
@@ -54,6 +81,10 @@ public class Capteur {
 
     }
 
+    /**
+     * Detecte la presence d'un camion
+     * @return
+     */
     private boolean hasTruck() {
         for (Camion camion : mesCamions) {
             if (this.coordActuel.equals(camion.getCoordActuel())) {
@@ -63,6 +94,12 @@ public class Capteur {
         return false;
     }
 
+    /**
+     * Constructeur de la classe
+     * @param longitude
+     * @param latitude
+     * @param intensite
+     */
     public Capteur(float longitude, float latitude, int intensite) {
         this.setIntensite(intensite);
         CoordGeo coord = new CoordGeo(longitude, latitude);
