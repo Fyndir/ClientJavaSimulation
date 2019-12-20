@@ -9,7 +9,7 @@ import java.util.List;
  * http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/decode.js
  */
 public class PolylineDecoder {
-    private static final double DEFAULT_PRECISION = 1E6;
+    private static final double DEFAULT_PRECISION = 1E5;
 
     public static List<CoordGeo> decode(String encoded) {
         return decode(encoded, DEFAULT_PRECISION);

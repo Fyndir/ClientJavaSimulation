@@ -1,4 +1,5 @@
 package com.company.model;
+
 import com.company.Tool.HTTPTools;
 import com.company.Tool.PolylineDecoder;
 import com.google.gson.JsonElement;
@@ -26,18 +27,17 @@ public class Camion {
     private void getTrajet() throws IOException, InterruptedException {
         try {
             // Recup avec l'api osrm
-            String StrDecode = HTTPTools.get("https://router.project-osrm.org/route/v1/driving/"+getCoordActuel().getCoordY()+","+getCoordActuel().getCoordX()+";"+getCoordDest().getCoordY()+","+getCoordDest().getCoordX()+"?overview=full");
+            String StrDecode = HTTPTools.get("https://router.project-osrm.org/route/v1/driving/" + getCoordActuel().getCoordY() + "," + getCoordActuel().getCoordX() + ";" + getCoordDest().getCoordY() + "," + getCoordDest().getCoordX() + "?overview=full");
             JsonObject objet = new JsonParser().parse(StrDecode).getAsJsonObject();
             JsonElement route = objet.get("routes");
             String[] elem = route.toString().split(",");
             elem = elem[0].split(":");
-            StrDecode = elem[1].substring(1, elem[1].length() - 1)+"@";
+            StrDecode = elem[1].substring(1, elem[1].length() - 1) + "@";
             List<CoordGeo> trajet = PolylineDecoder.decode(StrDecode);
             this.trajet = trajet;
+            this.trajet.add(this.getCoordDest());
             this.i = 0;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Erreur de recup de trajet");
         }
 
@@ -45,6 +45,7 @@ public class Camion {
 
     /**
      * getter de la propriete immatriculation
+     *
      * @return
      */
     public String getImmatriculation() {
@@ -53,6 +54,7 @@ public class Camion {
 
     /**
      * Get de la propriete CoordActuel
+     *
      * @return
      */
     public CoordGeo getCoordActuel() {
@@ -61,6 +63,7 @@ public class Camion {
 
     /**
      * Setter de la propriete CoordActuel
+     *
      * @param coordActuel
      */
     public void setCoordActuel(CoordGeo coordActuel) {
@@ -69,6 +72,7 @@ public class Camion {
 
     /**
      * getter de la propriete CoordDest
+     *
      * @return
      */
     public CoordGeo getCoordDest() {
@@ -77,6 +81,7 @@ public class Camion {
 
     /**
      * setter de la propriete CoordDest
+     *
      * @param coordDest
      */
     public void setCoordDest(CoordGeo coordDest) {
@@ -85,6 +90,7 @@ public class Camion {
 
     /**
      * Constructeur de la class camion
+     *
      * @param coordActuel
      * @param coordDest
      * @param immatriculation
@@ -100,12 +106,9 @@ public class Camion {
      */
     public void simulation() throws IOException, InterruptedException {
         if (trajet == null) {
-            try
-            {
+            try {
                 this.getTrajet();
-            }
-            catch (Exception e )
-            {
+            } catch (Exception e) {
                 System.out.println("Pas de trajet");
             }
 
@@ -117,6 +120,7 @@ public class Camion {
 
     /**
      * Permet de savoir si le camion est arrive a destination
+     *
      * @return
      */
     private boolean hasArrived() {
@@ -133,7 +137,13 @@ public class Camion {
             nouvellecoord = this.getCoordActuel();
         } else {
             nouvellecoord = this.trajet.get(i); // trouver la nouvelle coord
-            this.i++;
+            if (i != this.trajet.size()) {
+                this.i++;
+            }
+            else
+            {
+                System.out.println("le camion "+this.immatriculation+" est arrivé");
+            }
         }
         this.setCoordActuel(nouvellecoord);
 

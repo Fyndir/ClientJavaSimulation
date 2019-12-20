@@ -86,6 +86,7 @@ public class Capteur {
      * @return
      */
     private boolean hasTruck() {
+        int intensite = 0;
         for (Camion camion : mesCamions) {
             if (this.coordActuel.equals(camion.getCoordActuel())) {
                 return true;

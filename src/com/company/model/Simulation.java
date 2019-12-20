@@ -35,11 +35,11 @@ public class Simulation {
     public void run() throws InterruptedException, IOException {
         while (true) {
             try {
-                TimeUnit.SECONDS.sleep(3);
+                TimeUnit.MILLISECONDS.sleep(1);
             } catch (Exception e) {
                 System.out.println("erreur de sleep");
             }
-            Refresh();
+           // this.Refresh();
 
             System.out.println("Run des camions");
             for (Camion camion : mesCamions) {
@@ -52,7 +52,6 @@ public class Simulation {
             System.out.println("Maj Bdd et simu");
 
             this.UpdateDb();
-            this.Refresh();
         }
     }
 
@@ -115,9 +114,9 @@ public class Simulation {
      */
     private void Refresh() throws IOException, InterruptedException {
 
-       // System.out.println("refresh liste camion");
-       // mesCamions.clear();
-       // mesCamions.addAll(Factory.GetListCamion());
+        System.out.println("refresh liste camion");
+        mesCamions.clear();
+        mesCamions.addAll(Factory.GetListCamion());
 
     }
 
