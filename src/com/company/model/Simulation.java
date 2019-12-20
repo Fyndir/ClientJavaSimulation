@@ -95,6 +95,7 @@ public class Simulation {
             StrCapteur += cap.getCoordActuel().getCoordX() + "," + cap.getCoordActuel().getCoordY() + "," + cap.getIntensite() + ";";
         }
 
+        System.out.println("maj capteur");
         HTTPTools.post("https://cpefiresimulation.azurewebsites.net/send", StrCapteur.substring(0, StrCapteur.length() - 1));
 
         String StrCamion = "";
@@ -102,11 +103,8 @@ public class Simulation {
         for (Camion cam : mesCamions) {
             StrCamion += cam.getCoordActuel().getCoordX() + "," + cam.getCoordActuel().getCoordY() + "," + cam.getImmatriculation() + ";";
         }
-
-        HTTPTools.post("https://emergencymanager.azurewebsites.net/camion/send", StrCapteur.substring(0, StrCapteur.length() - 1));
-
-
-
+        System.out.println("Maj camion");
+        HTTPTools.post("https://emergencymanager.azurewebsites.net/camion/send", StrCamion.substring(0, StrCamion.length() - 1));
     }
 
     /**

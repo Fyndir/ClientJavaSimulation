@@ -1,6 +1,10 @@
 package com.company.model;
 import com.company.Tool.HTTPTools;
 import com.company.Tool.PolylineDecoder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -20,12 +24,22 @@ public class Camion {
      * Recupere le trajet du camion via l'api osrm
      */
     private void getTrajet() throws IOException, InterruptedException {
-        // Recup avec l'api osrm
-        String StrDecode = HTTPTools.get("https://router.project-osrm.org/route/v1/driving/"+getCoordActuel().getCoordY()+","+getCoordActuel().getCoordX()+";"+getCoordDest().getCoordY()+","+getCoordDest().getCoordX()+"?overview=full");
-
-        List<CoordGeo> trajet =  PolylineDecoder.decode(StrDecode);
-        this.trajet=trajet;
-        this.i=0;
+        try {
+            // Recup avec l'api osrm
+            String StrDecode = HTTPTools.get("https://router.project-osrm.org/route/v1/driving/"+getCoordActuel().getCoordY()+","+getCoordActuel().getCoordX()+";"+getCoordDest().getCoordY()+","+getCoordDest().getCoordX()+"?overview=full");
+            JsonObject objet = new JsonParser().parse(StrDecode).getAsJsonObject();
+            JsonElement route = objet.get("routes");
+            String[] elem = route.toString().split(",");
+            elem = elem[0].split(":");
+            StrDecode = elem[1].substring(1, elem[1].length() - 1);
+            List<CoordGeo> trajet = PolylineDecoder.decode(StrDecode);
+            this.trajet = trajet;
+            this.i = 0;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.toString());
+        }
 
     }
 
