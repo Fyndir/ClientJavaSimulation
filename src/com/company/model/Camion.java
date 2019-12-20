@@ -31,14 +31,14 @@ public class Camion {
             JsonElement route = objet.get("routes");
             String[] elem = route.toString().split(",");
             elem = elem[0].split(":");
-            StrDecode = elem[1].substring(1, elem[1].length() - 1);
+            StrDecode = elem[1].substring(1, elem[1].length() - 1)+"@";
             List<CoordGeo> trajet = PolylineDecoder.decode(StrDecode);
             this.trajet = trajet;
             this.i = 0;
         }
         catch (Exception e)
         {
-            System.out.println(e.toString());
+            System.out.println("Erreur de recup de trajet");
         }
 
     }
@@ -100,8 +100,15 @@ public class Camion {
      */
     public void simulation() throws IOException, InterruptedException {
         if (trajet == null) {
-            // mettre un petit time out
-            this.getTrajet();
+            try
+            {
+                this.getTrajet();
+            }
+            catch (Exception e )
+            {
+                System.out.println("Pas de trajet");
+            }
+
         }
         if (!this.hasArrived()) {
             this.moveForward();

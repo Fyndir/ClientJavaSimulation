@@ -115,9 +115,10 @@ public class Simulation {
      */
     private void Refresh() throws IOException, InterruptedException {
 
-        System.out.println("refresh liste camion");
-        mesCamions.clear();
-        mesCamions.addAll(Factory.GetListCamion());
+       // System.out.println("refresh liste camion");
+       // mesCamions.clear();
+       // mesCamions.addAll(Factory.GetListCamion());
+
     }
 
 
