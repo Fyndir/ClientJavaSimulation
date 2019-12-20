@@ -1,8 +1,6 @@
 package com.company.Tool;
 
 import com.company.model.CoordGeo;
-
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,39 +25,32 @@ public class PolylineDecoder {
      */
     public static List<CoordGeo> decode(String encoded, double precision) {
         List<CoordGeo> track = new ArrayList<CoordGeo>();
-        try {
-            int index = 0;
-            int lat = 0, lng = 0;
-            int len = encoded.length();
-            while (index < len) {
-                int b, shift = 0, result = 0;
-                do {
-                    b = encoded.charAt(index++) - 63;
-                    result |= (b & 0x1f) << shift;
-                    shift += 5;
-                } while (b >= 0x20);
-                int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-                lat += dlat;
+        int index = 0;
+        int lat = 0, lng = 0;
 
-                shift = 0;
-                result = 0;
-                do {
-                    b = encoded.charAt(index++) - 63;
-                    result |= (b & 0x1f) << shift;
-                    shift += 5;
-                } while (b >= 0x20);
-                int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-                lng += dlng;
+        while (index < encoded.length()) {
+            int b, shift = 0, result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lat += dlat;
 
-                CoordGeo p = new CoordGeo((float) (lat / precision), (float) (lng / precision));
-                track.add(p);
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.toString());
+            shift = 0;
+            result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lng += dlng;
+
+            CoordGeo p = new CoordGeo( (float) (lat / precision), (float) (lng / precision));
+            track.add(p);
         }
         return track;
     }
-
 }
