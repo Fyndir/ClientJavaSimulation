@@ -22,6 +22,7 @@ Par la site la gestion des déplacements des camions sera également gérer par 
 Son role est d'afficher la simulation en temps réel pour voir l'état des feu sur une map.
 
 * La brique IOT :
+
 Son role est de transmettre les information du serveur de simulation au serveur d'emergency manager à l'aide de deux microcontrolleur et d'API devellopées sur les deux serveurs.
 
 * Le serveur Emergency Manager (https://github.com/Fyndir/EmergencyManager):
