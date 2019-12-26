@@ -1,6 +1,6 @@
 # Projet Transversal 4IRC
 
-membre : 
+Membres : 
 * Antoine Gamain (https://github.com/Fyndir)
 * Tom Blanchet (https://github.com/frontBOI)
 * léo Meynet (https://github.com/Neexos)
