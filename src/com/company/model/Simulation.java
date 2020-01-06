@@ -35,23 +35,29 @@ public class Simulation {
     public void run() throws InterruptedException, IOException {
         while (true) {
             try {
-                TimeUnit.MILLISECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(1);
             } catch (Exception e) {
                 System.out.println("erreur de sleep");
             }
            // this.Refresh();
 
             System.out.println("Run des camions");
-            for (Camion camion : mesCamions) {
-                camion.simulation();
-            }
+
+                for (Camion camion : mesCamions)
+                {
+                    camion.simulation();
+                }
+
             System.out.println("Run des capteurs");
-            for (Capteur capteur : mesCapteurs) {
-                capteur.run();
+
+            for (Capteur capteur : mesCapteurs)
+            {
+                    capteur.run();
             }
             System.out.println("Maj Bdd et simu");
 
             this.UpdateDb();
+            this.Refresh();
         }
     }
 
@@ -99,11 +105,16 @@ public class Simulation {
 
         String StrCamion = "";
 
-        for (Camion cam : mesCamions) {
-            StrCamion += cam.getCoordActuel().getCoordX() + "," + cam.getCoordActuel().getCoordY() + "," + cam.getImmatriculation() + ";";
+        if (mesCamions.size() != 0)
+        {
+            for (Camion cam : mesCamions) {
+                StrCamion += cam.getCoordActuel().getCoordX() + "," + cam.getCoordActuel().getCoordY() + "," +  cam.getImmatriculation().substring(1,cam.getImmatriculation().length()-1) + ";";
+            }
+            System.out.println("Maj camion");
+            System.out.println(StrCamion);
+            HTTPTools.post("https://emergencymanager.azurewebsites.net/camion/send", StrCamion.substring(0, StrCamion.length() - 1));
+
         }
-        System.out.println("Maj camion");
-        HTTPTools.post("https://emergencymanager.azurewebsites.net/camion/send", StrCamion.substring(0, StrCamion.length() - 1));
     }
 
     /**
@@ -119,6 +130,5 @@ public class Simulation {
         mesCamions.addAll(Factory.GetListCamion());
 
     }
-
 
 }
