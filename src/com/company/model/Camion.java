@@ -1,12 +1,11 @@
 package com.company.model;
 
 import com.company.Tool.HTTPTools;
-import com.company.Tool.PolylineDecoder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Camion {
@@ -30,25 +29,26 @@ public class Camion {
 
         try {
             // Recup avec l'api osrm
-            this.StrDecode = HTTPTools.get("https://router.project-osrm.org/route/v1/driving/" + getCoordActuel().getCoordY() + "," + getCoordActuel().getCoordX() + ";" + getCoordDest().getCoordY() + "," + getCoordDest().getCoordX() + "?overview=full");
+            this.StrDecode = HTTPTools.get("https://router.project-osrm.org/route/v1/driving/" + getCoordActuel().getCoordY() + "," + getCoordActuel().getCoordX() + ";" + getCoordDest().getCoordY() + "," + getCoordDest().getCoordX() + "?geometries=geojson");
 
-
-            JsonObject objet = new JsonParser().parse(StrDecode).getAsJsonObject();
-            JsonElement route = objet.get("routes");
-            String[] elem = route.toString().split(",");
-            elem = elem[0].split(":");
-            this.StrDecode = elem[1].substring(1, (elem[1].length() -1)) + "@";
-
-
-
-            List<CoordGeo> trajet = PolylineDecoder.decode(StrDecode);
+            JSONObject decode = new JSONObject(this.StrDecode);
+            JSONArray test = decode.getJSONArray("routes");
+            JSONArray route = test.getJSONObject(0).getJSONObject("geometry").getJSONArray("coordinates");
+            List<CoordGeo> trajet = new ArrayList<>();
+            float x , y  = 0;
+            for (var coord : route)
+            {
+                x = ((JSONArray) coord).getFloat(1);
+                y = ((JSONArray) coord).getFloat(0);
+                trajet.add(new CoordGeo(x,y));
+            }
             this.trajet = trajet;
             this.trajet.add(this.getCoordDest());
             this.i = 0;
         } catch (Exception e ) {
             System.out.println(this.StrDecode);
             System.out.println("Erreur de recup de trajet du camion :"+ this.getImmatriculation());
-            System.out.println("https://router.project-osrm.org/route/v1/driving/" + getCoordActuel().getCoordY() + "," + getCoordActuel().getCoordX() + ";" + getCoordDest().getCoordY() + "," + getCoordDest().getCoordX() + "?overview=full");
+            System.out.println("https://router.project-osrm.org/route/v1/driving/" + getCoordActuel().getCoordY() + "," + getCoordActuel().getCoordX() + ";" + getCoordDest().getCoordY() + "," + getCoordDest().getCoordX() + "?geometries=geojson");
         }
 
     }

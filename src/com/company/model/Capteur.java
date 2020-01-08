@@ -72,7 +72,7 @@ public class Capteur {
             }
         } else {
             Random rand = new Random();
-            int proba = rand.nextInt(100);
+            int proba = rand.nextInt(1000);
 
             if (proba < probaIncendie) {
                 this.setIntensite(rand.nextInt(9));
