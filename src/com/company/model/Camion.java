@@ -19,26 +19,36 @@ public class Camion {
 
     private List<CoordGeo> trajet;
 
+    public String StrDecode ;
+
     private int i = 0;
 
     /**
      * Recupere le trajet du camion via l'api osrm
      */
     private void getTrajet() throws IOException, InterruptedException {
+
         try {
             // Recup avec l'api osrm
-            String StrDecode = HTTPTools.get("https://router.project-osrm.org/route/v1/driving/" + getCoordActuel().getCoordY() + "," + getCoordActuel().getCoordX() + ";" + getCoordDest().getCoordY() + "," + getCoordDest().getCoordX() + "?overview=full");
+            this.StrDecode = HTTPTools.get("https://router.project-osrm.org/route/v1/driving/" + getCoordActuel().getCoordY() + "," + getCoordActuel().getCoordX() + ";" + getCoordDest().getCoordY() + "," + getCoordDest().getCoordX() + "?overview=full");
+
+
             JsonObject objet = new JsonParser().parse(StrDecode).getAsJsonObject();
             JsonElement route = objet.get("routes");
             String[] elem = route.toString().split(",");
             elem = elem[0].split(":");
-            StrDecode = elem[1].substring(1, elem[1].length() - 1) + "@";
+            this.StrDecode = elem[1].substring(1, (elem[1].length() -1)) + "@";
+
+
+
             List<CoordGeo> trajet = PolylineDecoder.decode(StrDecode);
             this.trajet = trajet;
             this.trajet.add(this.getCoordDest());
             this.i = 0;
-        } catch (Exception e) {
-            System.out.println("Erreur de recup de trajet");
+        } catch (Exception e ) {
+            System.out.println(this.StrDecode);
+            System.out.println("Erreur de recup de trajet du camion :"+ this.getImmatriculation());
+            System.out.println("https://router.project-osrm.org/route/v1/driving/" + getCoordActuel().getCoordY() + "," + getCoordActuel().getCoordX() + ";" + getCoordDest().getCoordY() + "," + getCoordDest().getCoordX() + "?overview=full");
         }
 
     }
@@ -149,4 +159,10 @@ public class Camion {
 
     }
 
+    /**
+     * reset le trajet d'un camion
+     */
+    public void resetTrajet() {
+        this.trajet = null;
+    }
 }

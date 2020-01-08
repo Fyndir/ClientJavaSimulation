@@ -55,7 +55,8 @@ public class PolylineDecoder {
         }
         catch (Exception e)
         {
-            throw e;
+            System.out.println("erreur poliligne de merde");
+            return track;
         }
         return track;
     }

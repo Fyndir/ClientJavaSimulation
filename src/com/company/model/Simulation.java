@@ -3,6 +3,7 @@ package com.company.model;
 import com.company.Tool.HTTPTools;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -35,7 +36,7 @@ public class Simulation {
     public void run() throws InterruptedException, IOException {
         while (true) {
             try {
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.MILLISECONDS.sleep(10);
             } catch (Exception e) {
                 System.out.println("erreur de sleep");
             }
@@ -125,9 +126,35 @@ public class Simulation {
      */
     private void Refresh() throws IOException, InterruptedException {
 
+        System.out.println("refresh des camions");
+        List<Camion> newCamions= Factory.GetListCamion();
+        List<Camion> addCamion = new ArrayList<Camion>();
+
+
+        for (Camion newcam : newCamions)
+        {
+            int identique = 0;
+            for ( Camion cam : this.mesCamions)
+            {
+                if (cam.getImmatriculation().equals(newcam.getImmatriculation()))
+                {
+                    identique +=1;
+                    if(!newcam.getCoordDest().equals(cam.getCoordDest()))
+                    {
+                        cam.setCoordDest(newcam.getCoordDest());
+                        cam.resetTrajet();
+                    }
+                }
+            }
+            if (identique==0)
+            {
+                addCamion.add(newcam);
+            }
+        }
+        System.out.println("il y a "+addCamion.size()+" nouveaux camions");
+        this.mesCamions.addAll(addCamion);
+
         System.out.println("refresh liste camion");
-        mesCamions.clear();
-        mesCamions.addAll(Factory.GetListCamion());
 
     }
 

@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Capteur {
 
-    public final int probaIncendie = 1;
+    public final int probaIncendie = 0;
 
     private CoordGeo coordActuel;
 
