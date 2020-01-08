@@ -98,7 +98,7 @@ public class Simulation {
         String StrCapteur = "";
 
         for (Capteur cap : mesCapteurs) {
-            StrCapteur += cap.getCoordActuel().getCoordX() + "," + cap.getCoordActuel().getCoordY() + "," + cap.getIntensite() + ";";
+            StrCapteur += cap.getId() + ","+cap.getCoordActuel().getCoordX()+","+cap.getCoordActuel().getCoordY() +","+ cap.getIntensite() + ";";
         }
 
         System.out.println("maj capteur");

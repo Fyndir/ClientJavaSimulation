@@ -9,6 +9,16 @@ public class Capteur {
 
     private CoordGeo coordActuel;
 
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private int intensite;
 
     private List<Camion> mesCamions;
@@ -101,7 +111,8 @@ public class Capteur {
      * @param latitude
      * @param intensite
      */
-    public Capteur(float longitude, float latitude, int intensite) {
+    public Capteur(int id , float longitude, float latitude, int intensite) {
+        this.setId(id);
         this.setIntensite(intensite);
         CoordGeo coord = new CoordGeo(longitude, latitude);
         setCoordActuel(coord);

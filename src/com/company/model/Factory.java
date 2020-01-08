@@ -55,7 +55,7 @@ public class Factory {
         for (String res : split) {
 
             String[] resSplit = res.split(",");
-            capteurs.add(new Capteur(Float.parseFloat(resSplit[0]), Float.parseFloat(resSplit[1]), Integer.parseInt(resSplit[2])));
+            capteurs.add(new Capteur( Integer.parseInt(resSplit[0]),Float.parseFloat(resSplit[1]), Float.parseFloat(resSplit[2]), Integer.parseInt(resSplit[3])));
         }
 
         return capteurs;
