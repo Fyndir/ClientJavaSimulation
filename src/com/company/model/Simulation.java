@@ -5,12 +5,15 @@ import com.company.Tool.HTTPTools;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Object contenant les object de la simulation
  */
 public class Simulation {
+
+    public final int probaIncendie = 1;
 
     public List<Capteur> mesCapteurs;
 
@@ -46,14 +49,14 @@ public class Simulation {
 
                 for (Camion camion : mesCamions)
                 {
-                    camion.simulation();
+                    this.runCamion(camion);
                 }
 
             System.out.println("Run des capteurs");
 
             for (Capteur capteur : mesCapteurs)
             {
-                    capteur.run();
+                    runCapteur(capteur);
             }
             System.out.println("Maj Bdd et simu");
 
@@ -78,10 +81,6 @@ public class Simulation {
         System.out.println("Init liste capteur");
 
         List<Capteur> mesCapteurs = Factory.getListCapteur();
-
-        for (Capteur cap : mesCapteurs) {
-            cap.setMesCamions(mesCamions);
-        }
 
         Simulation simu = new Simulation(mesCapteurs, mesCamions);
 
@@ -155,6 +154,43 @@ public class Simulation {
         this.mesCamions.addAll(addCamion);
 
         System.out.println("refresh liste camion");
+
+    }
+
+    /**
+     * fait evoluer l'object en fct des regles de la simulations
+     */
+    private void runCamion(Camion cam) throws IOException, InterruptedException {
+        if (cam.trajet == null) {
+            try {
+                cam.getTrajet();
+            } catch (Exception e) {
+                System.out.println("Pas de trajet");
+            }
+
+        }
+        if (!cam.hasArrived()) {
+            cam.moveForward();
+        }
+    }
+
+    /**
+     * Fait evoluer l'object en fct des regles metier
+     */
+    private void runCapteur(Capteur capt) {
+
+        if (capt.getIntensite() != 0) {
+            if (capt.hasTruck(mesCamions)) {
+                capt.setIntensite(capt.getIntensite() - 1);
+            }
+        } else {
+            Random rand = new Random();
+            int proba = rand.nextInt(1000);
+
+            if (proba < probaIncendie) {
+                capt.setIntensite(rand.nextInt(9));
+            }
+        }
 
     }
 

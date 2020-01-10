@@ -1,7 +1,5 @@
 package com.company.model;
-
 import com.company.Tool.HTTPTools;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

@@ -16,7 +16,7 @@ public class Camion {
 
     private String immatriculation;
 
-    private List<CoordGeo> trajet;
+    public List<CoordGeo> trajet;
 
     public String StrDecode ;
 
@@ -25,7 +25,7 @@ public class Camion {
     /**
      * Recupere le trajet du camion via l'api osrm
      */
-    private void getTrajet() throws IOException, InterruptedException {
+    public void getTrajet() throws IOException, InterruptedException {
 
         try {
             // Recup avec l'api osrm
@@ -112,35 +112,18 @@ public class Camion {
     }
 
     /**
-     * fait evoluer l'object en fct des regles de la simulations
-     */
-    public void simulation() throws IOException, InterruptedException {
-        if (trajet == null) {
-            try {
-                this.getTrajet();
-            } catch (Exception e) {
-                System.out.println("Pas de trajet");
-            }
-
-        }
-        if (!this.hasArrived()) {
-            this.moveForward();
-        }
-    }
-
-    /**
      * Permet de savoir si le camion est arrive a destination
      *
      * @return
      */
-    private boolean hasArrived() {
+    public boolean hasArrived() {
         return this.coordActuel.equals(this.getCoordDest());
     }
 
     /**
      * Avance le camion d'une coord sur son trajet
      */
-    private void moveForward() {
+    public void moveForward() {
         CoordGeo nouvellecoord = null;
         if (trajet == null) {
             // calcul de la coord avec la ligne droite

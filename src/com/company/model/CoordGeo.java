@@ -57,16 +57,4 @@ public class CoordGeo {
         return Objects.hash(coordX, coordY);
     }
 
-    /**
-     * Override de toString
-     *
-     * @return
-     */
-    @Override
-    public String toString() {
-        return "CoordGeo{" +
-                "coordX=" + coordX +
-                ", coordY=" + coordY +
-                '}';
-    }
 }

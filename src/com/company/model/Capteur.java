@@ -5,11 +5,11 @@ import java.util.Random;
 
 public class Capteur {
 
-    public final int probaIncendie = 0;
-
     private CoordGeo coordActuel;
 
     private int id;
+
+    private int intensite;
 
     public int getId() {
         return id;
@@ -17,26 +17,6 @@ public class Capteur {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    private int intensite;
-
-    private List<Camion> mesCamions;
-
-    /**
-     * getter des camions
-     * @return
-     */
-    public List<Camion> getMesCamions() {
-        return mesCamions;
-    }
-
-    /**
-     * setter des camions
-     * @param mesCamions
-     */
-    public void setMesCamions(List<Camion> mesCamions) {
-        this.mesCamions = mesCamions;
     }
 
     /**
@@ -72,40 +52,6 @@ public class Capteur {
     }
 
     /**
-     * Fait evoluer l'object en fct des regles metier
-     */
-    public void run() {
-
-        if (this.getIntensite() != 0) {
-            if (this.hasTruck()) {
-                this.setIntensite(this.getIntensite() - 1);
-            }
-        } else {
-            Random rand = new Random();
-            int proba = rand.nextInt(1000);
-
-            if (proba < probaIncendie) {
-                this.setIntensite(rand.nextInt(9));
-            }
-        }
-
-    }
-
-    /**
-     * Detecte la presence d'un camion
-     * @return
-     */
-    private boolean hasTruck() {
-        int intensite = 0;
-        for (Camion camion : mesCamions) {
-            if (this.coordActuel.equals(camion.getCoordActuel())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Constructeur de la classe
      * @param longitude
      * @param latitude
@@ -118,13 +64,18 @@ public class Capteur {
         setCoordActuel(coord);
     }
 
-    @Override
-    public String toString() {
-        return "Capteur{" +
-                "probaIncendie=" + probaIncendie +
-                ", coordActuel=" + coordActuel.toString() +
-                ", intensite=" + intensite +
-                ", mesCamions=" + mesCamions +
-                '}';
+    /**
+     * Detecte la presence d'un camion
+     * @return
+     */
+    public boolean hasTruck(List<Camion> mesCamions) {
+        int intensite = 0;
+        for (Camion camion : mesCamions) {
+            if (this.coordActuel.equals(camion.getCoordActuel())) {
+                return true;
+            }
+        }
+        return false;
     }
+
 }
